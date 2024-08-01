@@ -4,7 +4,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11.0
+    runs-on: macos-latest
     strategy:
       matrix:
         ARCH:
@@ -22,7 +22,7 @@ jobs:
       - name: Download OpenSSL
         run: |
           source ./cryptography-linux/openssl-version.sh
-          curl -o openssl.tar.gz https://www.openssl.org/source/$OPENSSL_VERSION.tar.gz
+          curl --output openssl.tar.gz -L https://www.openssl.org/source/$OPENSSL_VERSION.tar.gz
           shasum -a 256 -c <<< "$OPENSSL_SHA256 *openssl.tar.gz"
       - name: Extract OpenSSL
         run: |
@@ -53,7 +53,7 @@ jobs:
           path: artifact/
 
   universal2:
-    runs-on: macos-11.0
+    runs-on: macos-latest
     name: "Build OpenSSL for macOS universal2"
     needs: [ build ]
     steps:
